@@ -31,13 +31,12 @@ export default function Home() {
   
     <div className="absolute bg-gradient-to-b from-white-500 to-white-400 opacity-75 inset-0 z-0" />
     <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-      
       <div className="flex justify-center self-center  z-10">
         <div className="p-12 bg-white mx-auto rounded-2xl w-100 shadow-lg shadow-black ">
           <div className="mb-4">
             <h3 className="font-bold text-3xl text-gray-800">LOGIN </h3>
             <div className="mt-5">
-            <Link href='#'  className="text-black font-bold">Not a member yet? Create account</Link >
+            <Link href={'/register'}  className="text-black font-bold">Not a member yet? Create account</Link >
             </div>
           </div>
           <div className="space-y-5">
@@ -98,6 +97,7 @@ export default function Home() {
         </div>
       </div>
     </div>
+    
 
     </>
 
