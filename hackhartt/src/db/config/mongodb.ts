@@ -1,5 +1,5 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
-uri = 
+const uri = process.env.MONGO_URI as string
 
 const client = new MongoClient(uri,{
     serverApi:{
@@ -8,3 +8,4 @@ const client = new MongoClient(uri,{
         deprecationErrors: true
     }
 })
+export const database = client.db('gc2-dyka')
