@@ -1,6 +1,6 @@
 export default function Footer(){
     return(
-      <footer className="bg-black" aria-labelledby="footer-heading">
+      <footer className="bg-gray-400" aria-labelledby="footer-heading">
   <h2 id="footer-heading" className="sr-only">
     Footer
   </h2>
@@ -8,8 +8,8 @@ export default function Footer(){
     <div className="xl:grid xl:grid-cols-3 xl:gap-8">
       <div className="space-y-8">
         <img
-          className="h-20"
-          src="https://aaah0mnbncqtinas.public.blob.vercel-storage.com/FX5ATkass4-no-background-VmcZHSX7xE4ng29ATNphGUdb388fxH.png"
+          className="h-42"
+          src="https://cdn.worldvectorlogo.com/logos/logo-carhartt.svg"
           alt="Company name"
         />
         <p className="text-sm leading-6 text-gray-600">

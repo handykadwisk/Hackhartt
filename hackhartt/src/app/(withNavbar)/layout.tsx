@@ -1,3 +1,4 @@
+import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 
 export default function RootLayout({
@@ -8,6 +9,7 @@ export default function RootLayout({
   return (
     <>
     {children}
+    <Banner/>
     <Footer/>
     </>
   );
