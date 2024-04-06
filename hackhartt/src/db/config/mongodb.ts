@@ -8,4 +8,4 @@ const client = new MongoClient(uri,{
         deprecationErrors: true
     }
 })
-export const database = client.db('gc2-dyka')
+export const db = client.db('gc2-dyka')

@@ -2,7 +2,7 @@ import Banner from "@/components/Banner";
 import Banner1 from "@/components/Banner1";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 
 export default function RootLayout({
   children,
