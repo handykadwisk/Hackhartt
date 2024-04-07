@@ -1,6 +1,5 @@
 import { MongoClient, ServerApiVersion} from 'mongodb';
-const uri = "mongodb+srv://handykadwisk:<password>@gc1-dyka.ctrvyla.mongodb.net/?retryWrites=true&w=majority&appName=GC1-Dyka";
-
+const uri = process.env.MONGO_URI as string
 const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -8,3 +7,5 @@ const client = new MongoClient(uri, {
       deprecationErrors: true,
     }
   });
+
+export const db = client.db("gc2-dyka")

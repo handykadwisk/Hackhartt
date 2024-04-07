@@ -1,29 +1,43 @@
-'use client'
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  async function loginAction(formData: FormData) {
+    "use server"
+    try {
+        cookies().delete("Authorization");
+        // console.log(formData,'<<<<<<<');
+        
+        const rawFormData = {
+            email: formData.get("email"),
+            password: formData.get("password"),
+        };
+
+        const response = await fetch("http://localhost:3000/api/login", {
+            method: "POST",
+            cache: "no-store",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(rawFormData),
+        });
+
+        if (response.status != 200) {
+            throw new Error("Failed to Login" + response.status);
+        }
+        const responseJson = await response.json();
+        cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+    } catch (error) {
+        console.error("Login Error", error);
+        redirect("/login");
+    }
+    return redirect("/");
+}
+ 
   return (
     <>
-      {/* <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Log in yo your account</h2>
-
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="" className="space-y-6">
-            <div>
-              <label htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900">
-                Email Addres
-              </label>
-            </div>
-          </form>
-
-        </div>
-
-      </div> */}
       <link
     href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
     rel="stylesheet"
@@ -39,6 +53,7 @@ export default function Home() {
             <Link href={'/register'}  className="text-black font-bold">Not a member yet? Create account</Link >
             </div>
           </div>
+          <form action={loginAction}>
           <div className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 tracking-wide">
@@ -46,7 +61,8 @@ export default function Home() {
               </label>
               <input
                 className=" w-full text-base px-4 py-2 border  border-black  focus:outline-none focus:border-yellow-400"
-                type=""
+                type="email"
+                name="email"
                 placeholder="mail@gmail.com *"
               />
             </div>
@@ -57,6 +73,7 @@ export default function Home() {
               <input
                 className="w-full content-center text-base px-4 py-2 border  border-black focus:outline-none focus:border-yellow-400"
                 type="password"
+                name="password"
                 autoComplete="current-password"
                 placeholder="Enter your password *"
               />
@@ -93,6 +110,7 @@ export default function Home() {
               <Link href={"/"} className="font-bold hover:text-yellow-500">Back</Link>
             </div>
           </div>
+          </form>
           
         </div>
       </div>

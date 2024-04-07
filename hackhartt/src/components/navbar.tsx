@@ -1,7 +1,23 @@
+"use client";
+import { Cookie } from "next/font/google";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { deleteCookie, getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
 import { BsPersonFill } from "react-icons/bs";
+import LogoutButton from "./Logout";
 
 export default function Navbar(){
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  useEffect(() => {
+    const accessToken = getCookie('Authorization');
+    setIsLoggedIn(accessToken ? true : false);
+  }, []);
+
+
     return(
         <>
         <div className=" bg-white">
@@ -15,8 +31,21 @@ export default function Navbar(){
       <div >
         <div className="navbar h-10 bg-white text-gray-600 p-2 justify-center ">
           <BsPersonFill size={24} />
-          <Link href={"/login"} className="mr-2">LOGIN |</Link>
-          <Link href={"/register"}>REGISTER</Link>
+          {isLoggedIn ? (
+                            <>
+                                <li>
+                                    <Link href={"/wishlist"}>
+                                        Your Wishlist |
+                                    </Link>
+                                    <LogoutButton/>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <Link href={"/login"} className="mr-2">LOGIN |</Link>
+                                <Link href={"/register"}>REGISTER</Link>
+                            </>
+                        )}
         </div>
       </div>
       </>
