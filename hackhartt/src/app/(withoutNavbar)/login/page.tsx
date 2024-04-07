@@ -2,39 +2,44 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import ClientFlashComponent from "@/components/ClientFlashComponent";
 
 export default function Home() {
-  async function loginAction(formData: FormData) {
-    "use server"
-    try {
-        cookies().delete("Authorization");
-        // console.log(formData,'<<<<<<<');
-        
-        const rawFormData = {
-            email: formData.get("email"),
-            password: formData.get("password"),
-        };
+  async function loginFunction(formData: FormData) {
+    "use server";
 
-        const response = await fetch("http://localhost:3000/api/login", {
-            method: "POST",
-            cache: "no-store",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(rawFormData),
-        });
+    cookies().delete("Authorization");
 
-        if (response.status != 200) {
-            throw new Error("Failed to Login" + response.status);
-        }
-        const responseJson = await response.json();
-        cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
-    } catch (error) {
-        console.error("Login Error", error);
-        redirect("/login");
+    const rawFormData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rawFormData),
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.json();
+
+      if (errorMessage.message) {
+        redirect(`/login?error=${errorMessage.message}`);
+      } else {
+        redirect(`/login?error=${errorMessage.error}`);
+      }
     }
+
+    const responseJson = await response.json();
+
+    cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+
     return redirect("/");
-}
+  }
  
   return (
     <>
@@ -53,7 +58,8 @@ export default function Home() {
             <Link href={'/register'}  className="text-black font-bold">Not a member yet? Create account</Link >
             </div>
           </div>
-          <form action={loginAction}>
+          <ClientFlashComponent/>
+          <form action={loginFunction}>
           <div className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 tracking-wide">

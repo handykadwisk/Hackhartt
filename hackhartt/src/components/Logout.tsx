@@ -6,7 +6,7 @@ import { logout } from "@/actions/user";
 
 export default function LogoutButton() {
   return (
-    <button onClick={() => logout()} className="btn text-black">
+    <button onClick={() => logout()} className=" text-black">
       Logout
     </button>
   );

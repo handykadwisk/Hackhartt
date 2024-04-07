@@ -1,36 +1,31 @@
 import { ObjectId } from "mongodb";
 
 export interface User {
-    _id: ObjectId;
-    name: string;
-    username: string;
-    email: string;
-    password: string; 
+  _id?: ObjectId;
+  name: string;
+  username: string; // validation: required, unique
+  email: string; // validation: required, unique, email format
+  password: string; // validation: required, length min 5
 }
 
 export interface Product {
-    _id: ObjectId;
-    name: string; 
-    slug: string;
-    description: string;
-    excerpt: string;
-    price: number;
-    tags: string[];
-    thumbnail: string;
-    images: string[];
-    createdAt: Date;
-    updatedAt: Date;
+  _id: ObjectId;
+  name: string; // validation: required
+  slug: string; // validation: required, unique
+  description: string;
+  excerpt: string;
+  price: number;
+  tags: string[];
+  thumbnail: string;
+  images: string[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Wishlist {
-    _id: ObjectId;
-    userId: ObjectId;
-    productId: ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface Response<T> {
-    error?: string;
-    data?: T | null;
+  _id?: ObjectId;
+  userId: ObjectId; // validation: required
+  productId: ObjectId; // validation: required
+  createdAt: Date;
+  updatedAt: Date;
 }

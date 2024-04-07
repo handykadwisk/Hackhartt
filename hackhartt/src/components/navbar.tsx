@@ -3,10 +3,10 @@ import { Cookie } from "next/font/google";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { deleteCookie, getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { BsPersonFill } from "react-icons/bs";
 import LogoutButton from "./Logout";
+import { getCookie } from "cookies-next";
 
 export default function Navbar(){
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +30,9 @@ export default function Navbar(){
       </div>
       <div >
         <div className="navbar h-10 bg-white text-gray-600 p-2 justify-center ">
+          <Link href={'/'} className="mr-10">
+            Home
+          </Link>
           <BsPersonFill size={24} />
           {isLoggedIn ? (
                             <>

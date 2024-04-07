@@ -1,8 +1,43 @@
-'use client'
+
+import ClientFlashComponent from "@/components/ClientFlashComponent";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+export const metadata = {
+  title: "Register | HACKHARTT",
+  description: "**",
+}
+
 
 export default function Home() {
+  async function registerAction(formData: FormData) {
+    "use server";
+
+    const rawFormData = {
+      name: formData.get("name"),
+      username: formData.get("username"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/register`, {
+      method: "post",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rawFormData),
+    });
+    // console.log(response,'<<<<<<');
+    
+    if (!response.ok) {
+      const errorMessage = await response.json();
+      redirect(`/register?error=${errorMessage.message}`);
+    } else {
+      redirect("/login");
+    }
+  }
   return (
     <>
       <link
@@ -21,6 +56,9 @@ export default function Home() {
                 <p>Already a member?<Link href={'/login'} className="text-black font-bold"> Login</Link ></p>
               </div>
             </div>
+            <ClientFlashComponent/>
+            <form action={registerAction}>
+            
             <div className="space-y-5">
 
               <div className="space-y-2">
@@ -29,7 +67,8 @@ export default function Home() {
                 </label>
                 <input
                   className=" w-full text-base px-4 py-2 border  border-black  focus:outline-none focus:border-yellow-400"
-                  type=""
+                  type="email"
+                  name="email"
                   placeholder="mail@gmail.com *"
                 />
               </div>
@@ -41,6 +80,7 @@ export default function Home() {
                 <input
                   className="w-full content-center text-base px-4 py-2 border  border-black focus:outline-none focus:border-yellow-400"
                   type="password"
+                  name="password"
                   autoComplete="current-password"
                   placeholder="Enter your password *"
                 />
@@ -48,23 +88,25 @@ export default function Home() {
 
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-700 tracking-wide">
-                  FIRST NAME *
+                  Name *
                 </label>
                 <input
                   className=" w-full text-base px-4 py-2 border  border-black  focus:outline-none focus:border-yellow-400"
-                  type=""
-                  placeholder="first name *"
+                  type="text"
+                  name="name"
+                  placeholder="Name *"
                 />
               </div>
 
               <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 tracking-wide">
-                LAST NAME *
+                Username *
               </label>
               <input
                 className=" w-full text-base px-4 py-2 border  border-black  focus:outline-none focus:border-yellow-400"
-                type=""
-                placeholder="last name *"
+                type="text"
+                name="username"
+                placeholder="Username *"
               />
             </div>
 
@@ -78,7 +120,7 @@ export default function Home() {
                 <Link href={"/"} className="font-bold hover:text-yellow-500">Back</Link>
               </div>
             </div>
-
+            </form>
           </div>
         </div>
       </div>
