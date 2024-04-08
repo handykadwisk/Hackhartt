@@ -6,11 +6,11 @@ interface ProductsCardProps {
   products: Product[];
 }
 
-export default function CardProducts({ products }: ProductsCardProps) {
+export default function CardProducts({ products }: ProductsCardProps,) {
   return (
     <>
       {products.map((product, index) => (
-        <div className="card  mr-4 mb-2">
+        <div className="card  mr-4 mb-2" key={index}>
           <Link href={`/products/${product.slug}`}>
             <figure className="pt-10 ">
               <img
