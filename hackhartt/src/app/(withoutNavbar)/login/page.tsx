@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import ClientFlashComponent from "@/components/ClientFlashComponent";
+import { Suspense } from "react";
+import Loading from "@/app/(withNavbar)/products/Loading";
 
 export default function Home() {
   async function loginFunction(formData: FormData) {
@@ -58,7 +60,9 @@ export default function Home() {
             <Link href={'/register'}  className="text-black font-bold">Not a member yet? Create account</Link >
             </div>
           </div>
-          <ClientFlashComponent/>
+          <Suspense fallback={<Loading />}>
+                        <ClientFlashComponent />
+                    </Suspense>
           <form action={loginFunction}>
           <div className="space-y-5">
             <div className="space-y-2">

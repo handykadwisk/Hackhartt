@@ -1,8 +1,10 @@
 
+import Loading from "@/app/(withNavbar)/products/Loading";
 import ClientFlashComponent from "@/components/ClientFlashComponent";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Register | HACKHARTT",
@@ -56,7 +58,9 @@ export default function Home() {
                 <p>Already a member?<Link href={'/login'} className="text-black font-bold"> Login</Link ></p>
               </div>
             </div>
-            <ClientFlashComponent/>
+            <Suspense fallback={<Loading />}>
+                        <ClientFlashComponent />
+                    </Suspense>
             <form action={registerAction}>
             
             <div className="space-y-5">
