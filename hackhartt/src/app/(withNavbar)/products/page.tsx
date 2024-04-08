@@ -3,6 +3,7 @@ import CardProducts from "@/components/CardProducts";
 import { Product } from "@/types";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 export default function Products() {
